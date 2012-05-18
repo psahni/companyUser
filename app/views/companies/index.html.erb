@@ -1,0 +1,14 @@
+<div class="sixteen columns">
+   <h1 class="remove-bottom" style="margin-top: 40px">Comapnies Listing</h1>
+   <hr />
+</div>
+
+<%=render_flash_message%>
+
+<%=link_to 'Create Company', new_company_path%>
+
+<% if @companies.any? %>
+  <% @companies.each do |company|%>
+    <%=company.name%>
+  <% end %>
+<% end %>    

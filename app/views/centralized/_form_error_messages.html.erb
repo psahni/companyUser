@@ -1,0 +1,11 @@
+<% if instance.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(instance.errors.count, "error") %> prohibited this <%=instance.class.to_s.downcase%> from being saved:</h2>
+    <ul>
+    <% @company.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+

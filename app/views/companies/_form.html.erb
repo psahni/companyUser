@@ -1,0 +1,74 @@
+<%=render :partial => 'centralized/form_error_messages', :locals => {:instance => @company }%>
+<%=form_for @company do |form|%>
+  
+  <div class='six columns alpha'>
+    <div class='field'>
+      <%=form.label :name%>
+      <%=form.text_field :name%>
+    </div>
+    
+    
+    <div class='field'>
+      <%=form.label :address%>
+      <%=form.text_area :address, :rows =>2, :cols => 30%>
+    </div>
+    
+    
+    <div class='field'>
+      <%=form.label :no_of_employees%>
+      <%=form.text_field :no_of_employees%>
+    </div>
+  
+  
+    <div class='field'>
+      <%=form.label :stock_symbol%>
+      <%=form.text_field :stock_symbol%>
+    </div>
+    
+    <div class='field'>
+      <%=form.label :business_type%>
+      <%=form.text_field :business_type%>
+    </div>
+    
+    
+    
+    <div class='field'>
+      <%=form.label :description%>
+      <%=form.text_area :description, :rows => 2, :cols => 30%>
+    </div>
+  </div>
+  
+  <div class='six columns omega'>
+    
+    
+    <div class='field'>
+      <%=form.label      :contact_number%>
+      <%=form.text_field :contact_number%>
+    </div>
+    
+    <div class='field'>
+      <%=form.label      :database_name%>
+      <%=form.text_field :db_name, :rows => 2, :cols => 30%>
+    </div>
+    
+    <%=form.fields_for :admin do |user|%>
+      
+      <%=user.label :admin_first_name%>
+      <%=user.text_field :first_name%>
+      
+      <%=user.label :admin_last_name%>
+      <%=user.text_field :last_name%>
+      
+      <%=user.label :admin_username%>
+      <%=user.text_field :username%>
+      
+      
+      <%=user.label :admin_email %>
+      <%=user.text_field :email%>
+    <% end %>
+    
+    <%=form.submit @company.new_record? ? "Create" : "update"%>
+  </div>
+  
+    
+<% end %>
