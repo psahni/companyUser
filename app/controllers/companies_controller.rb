@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
 
+  before_filter :require_superuser_login
   before_filter :company, :except => [:index, :new, :create]  
   
   def index
@@ -29,7 +30,14 @@ class CompaniesController < ApplicationController
     end    
   end
    
-   
+  
+  def destroy
+    @company.destroy
+    redirect_to companies_path, :notice => "Deleted successfully"
+  end
+  
+  private
+  
   def company
     @company =  Company.find(params[:id])
   rescue

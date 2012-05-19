@@ -67,7 +67,7 @@
       <%=user.text_field :email%>
     <% end %>
     
-    <%=form.submit @company.new_record? ? "Create" : "Update"%>
+    <%=form.submit @company.new_record? ? "Create" : "Update", :disable_with => "Please Wait..."%>
   </div>
   
     

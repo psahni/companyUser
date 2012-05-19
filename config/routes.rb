@@ -2,13 +2,16 @@ AkashPortal::Application.routes.draw do
   
 
   root :to => 'home#index', :only => [ :index ]
+  
   resources :home
   resources :user_sessions
   resources :companies
   resources :users  
-  match 'login' => 'user_sessions#new', :as => :login
+  resources :password_resets
+  
+  match 'login'  => 'user_sessions#new',     :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
-
+  match 'forgot' => 'password_resets#new', :as => :forgot
 
 
 

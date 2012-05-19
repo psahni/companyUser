@@ -14,8 +14,8 @@ class Company < ActiveRecord::Base
   
   # => Associations
   
-  has_many :users
-  has_one :admin, :class_name => 'User'
+  has_many :users, :conditions => ['users.role!=?', User::ROLES['admin']], :dependent => :destroy
+  has_one :admin, :class_name => 'User', :dependent => :destroy
   
   accepts_nested_attributes_for :users
   accepts_nested_attributes_for :admin

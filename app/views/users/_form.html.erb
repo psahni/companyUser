@@ -1,0 +1,35 @@
+<%=render :partial => 'centralized/form_error_messages', :locals => { :instance => @user }%>
+<%=form_for @user do |form|%>
+
+  <div class='field'>
+    <%=form.label :first_name%>
+    <%=form.text_field :first_name %>
+  </div>
+
+  <div class='field'>
+    <%=form.label :last_name%>
+    <%=form.text_field :last_name%> 
+  </div> 
+  
+  <div class='field'>
+    <%=form.label :username%>
+    <%=form.text_field :username%> 
+  </div> 
+  
+  
+  <div class='field'>
+    <%=form.label :email%>
+    <%=form.text_field :email%> 
+  </div> 
+  
+  <div class='field'>
+     <%=form.label :role%>
+     Worker: <%=form.radio_button :user_role,  User::ROLES['worker'], :checked => (@user.role == User::ROLES['worker']), :class => 'user_role_radio'%>
+     Manager:<%=form.radio_button :user_role, User::ROLES['manager'], :checked => (@user.role == User::ROLES['manager']), :class => 'user_role_radio'%>
+  </div>
+  
+  <div class='field'>
+    <%=form.submit @user.new_record? ? "Create" : "Update", :disable_with => "Please Wait..."%>
+  <div>
+  
+<% end %>

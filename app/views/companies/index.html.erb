@@ -1,5 +1,8 @@
 <div class="sixteen columns">
    <h1 class="remove-bottom" style="margin-top: 40px">Companies Listing</h1>
+    <div class='three columns omega' style='float:right;'>
+      <%=link_to 'Create Company', new_company_path%>
+    </div>
    <hr />
 </div>
 
@@ -7,18 +10,13 @@
   <%=render_flash_message%>
 </div>
 
-<div class='three columns omega' style='float:right;'>
-  <%=link_to 'Create Company', new_company_path%>
-</div>
-
-
-<div class='twelve columns alpha'>
+<div class='sixteen columns alpha'>
 
 <% if @companies.any? %>
   <% @companies.each do |company|%>
       
       
-      <div class='eight columns alpha'>
+      <div class='twelve columns alpha'>
         <h5><%=company.name%></h5>
       
         Address: <%=company.address%><br/>
@@ -36,9 +34,11 @@
         <%=link_to "edit", edit_company_path(company)%>
         <%=link_to "destroy", company_path(company), :method => :delete, :confirm => "Are you sure?"%>
       </div>
-      <hr/>
       
+      <hr/>
   <% end %>
+ <% else %>
+  No Company exist
 <% end %>
 
 </div>    

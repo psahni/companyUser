@@ -1,0 +1,30 @@
+<div class="sixteen columns">
+   <h1 class="remove-bottom" style="margin-top: 40px">Users Listing - <%=current_company.name%></h1>
+    <div class='three columns omega' style='float:right;'>
+      <%=link_to 'Create User', new_user_path%>
+    </div>
+   <hr />
+</div>
+
+<%=render_flash_message%>
+
+<div class='sixteen columns alpha'>
+  <% if @users.any? %>
+    <% @users.each do |user|%>
+      <div class='nine columns alpha'>
+        <h4><%=user.full_name%></h4>
+        Email:<%=user.email%><br/>
+        Role: <%=User::DISPLAY_ROLES[user.role]%>
+      </div>
+      
+      <div class='four columns omega'>
+        <%=link_to "edit", edit_user_path(user)%>
+        <%=link_to "delete", user_path(user), :method => :delete, :confirm => "Are you sure?"%>
+      </div>
+      
+      <hr/>
+    <% end %>
+  <% else %>
+    No user exists
+  <% end %>
+</div>
