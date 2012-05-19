@@ -27,6 +27,8 @@ class CompaniesController < ApplicationController
   def update
     if @company.update_attributes(params[:company])
       redirect_to companies_path, :notice => "Updated successfully"
+    else
+      render 'edit'
     end    
   end
    
