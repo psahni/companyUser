@@ -11,11 +11,8 @@ namespace :db do
     user.role = -1
     user.email = 'super@user.com'
     user.password = user.password_confirmation = 'superpass'
-    
-    if user.save
-      puts "super user has been successfully created"
-    end
+    user.save(:validate => false)
+    puts "super user has been successfully created"
   end
-  
   
 end

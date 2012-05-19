@@ -15,13 +15,13 @@ class Company < ActiveRecord::Base
   # => Associations
   
   has_many :users
-  
   has_one :admin, :class_name => 'User'
   
   accepts_nested_attributes_for :users
   accepts_nested_attributes_for :admin
   
-  before_validation do
+  before_validation(:on => :create) do
     self.admin.role =  User::ROLES['admin']
   end
+  
 end

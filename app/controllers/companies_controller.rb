@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
-  
+
+  before_filter :company, :except => [:index, :new, :create]  
   
   def index
     @companies = Company.all
@@ -18,5 +19,21 @@ class CompaniesController < ApplicationController
       render 'new'
     end
   end
+
+  def edit
+  end 
+  
+  def update
+    if @company.update_attributes(params[:company])
+      redirect_to companies_path, :notice => "Updated successfully"
+    end    
+  end
+   
+   
+  def company
+    @company =  Company.find(params[:id])
+  rescue
+    (redirect_to companies_url, :alert => "Invalid url")
+  end 
   
 end

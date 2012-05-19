@@ -31,13 +31,17 @@ class User < ActiveRecord::Base
   end
 
   # => ROLES
-  
+  #----------------------------------------
   ROLES = { 'superuser' => -1,  'worker' => 0 , 'manager' => 1, 'admin' => 2 }
 
 
 
   def superuser?
-    self.role == -1
+    self.role == ROLES['superuser']
+  end
+  
+  def full_name
+    first_name + " " + last_name
   end
   
 end

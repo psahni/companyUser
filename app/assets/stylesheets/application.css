@@ -21,3 +21,12 @@
 }
 
 
+#notice{
+  color: green;
+  padding: 5px;
+}
+
+#alert{
+  color: red;
+  padding: 10px;
+}

@@ -1,14 +1,44 @@
 <div class="sixteen columns">
-   <h1 class="remove-bottom" style="margin-top: 40px">Comapnies Listing</h1>
+   <h1 class="remove-bottom" style="margin-top: 40px">Companies Listing</h1>
    <hr />
 </div>
 
-<%=render_flash_message%>
+<div class='seven columns alpha'>
+  <%=render_flash_message%>
+</div>
 
-<%=link_to 'Create Company', new_company_path%>
+<div class='three columns omega' style='float:right;'>
+  <%=link_to 'Create Company', new_company_path%>
+</div>
+
+
+<div class='twelve columns alpha'>
 
 <% if @companies.any? %>
   <% @companies.each do |company|%>
-    <%=company.name%>
+      
+      
+      <div class='eight columns alpha'>
+        <h5><%=company.name%></h5>
+      
+        Address: <%=company.address%><br/>
+        No of employees: <%=company.no_of_employees%><br/>
+        Database Name: <%=company.db_name%><br/>
+        Business Type:<%=company.business_type%><br/>
+        Stock Symbol: <%=company.stock_symbol%><br/>
+        Contact Number: <%=company.contact_number%><br/>
+        Description: <%=company.description%><br/>
+        Admin Name: <%=company.admin.full_name%><br/>
+        Email: <%=company.admin.email%>
+      </div>
+      
+      <div class='four columns omega'>
+        <%=link_to "edit", edit_company_path(company)%>
+        <%=link_to "destroy", company_path(company), :method => :delete, :confirm => "Are you sure?"%>
+      </div>
+      <hr/>
+      
   <% end %>
-<% end %>    
+<% end %>
+
+</div>    
