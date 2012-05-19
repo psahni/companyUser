@@ -60,4 +60,6 @@ module AkashPortal
     config.assets.version = '1.0'
   end
 end
+
+#https://github.com/rails/rails/issues/2639
 #https://github.com/rails/rails/issues/2639

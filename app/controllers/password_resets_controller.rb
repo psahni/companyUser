@@ -31,6 +31,7 @@ class PasswordResetsController < ApplicationController
     # the next line makes the password confirmation validation work
     @user.password_confirmation = params[:user][:password_confirmation]
     # the next line clears the temporary token and updates the password
+    @user.skip_role = true
     if @user.change_password!(params[:user][:password])
       redirect_to(login_path, :notice => 'Password was successfully updated.')
     else

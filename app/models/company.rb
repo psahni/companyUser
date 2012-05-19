@@ -11,6 +11,7 @@ class Company < ActiveRecord::Base
 
   validates :contact_number, :numericality => true, :unless => lambda{|c| c.contact_number.blank?}
   
+  validates :db_name, :uniqueness => true, :unless => lambda{|c| c.db_name.blank?}  
   
   # => Associations
   
@@ -25,16 +26,28 @@ class Company < ActiveRecord::Base
   end
   
   before_create :create_database_of_company
+  before_destroy :drop_database_of_company
+  
+  
   
   def create_database_of_company
     database_name = self.db_name
     logger.info("\n\n==> CREATING DATABASE FOR #{ name }============ ")
     ActiveRecord::Base.connection.create_database(database_name, mysql_config)
-  rescue => ex
-      logger.error("ERROR: DATABSE COULD NOT BE CREATED BECAUSE #{ ex.message }\n\n")
-      return
+    rescue => ex
+    logger.error("ERROR: DATABASE COULD NOT BE CREATED BECAUSE #{ ex.message }\n\n")
+    return
   end
     
+    
+  def drop_database_of_company
+    database_name = self.db_name
+    logger.info("\n\n==> DROPPING DATABASE FOR #{ name }============ ")
+    ActiveRecord::Base.connection.drop_database(database_name)
+    rescue => ex
+    logger.error("ERROR: DATABASE COULD NOT BE DROPPED BECAUSE #{ ex.message }\n\n")
+    return
+  end
     
   private
   

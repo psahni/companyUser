@@ -1,14 +1,14 @@
 class User < ActiveRecord::Base
   authenticates_with_sorcery!
  
-  attr_accessor :user_role
+  attr_accessor :user_role, :skip_role
   attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role
   
   # => Validations
   #---------------------------------------  
   validates_length_of :password, 
-                      :minimum => 3, 
-                      :message => "password must be at least 3 characters long", 
+                      :minimum => 4, 
+                      :message => "password must be at least 4 characters long", 
                       :if => :password
                       
   validates_confirmation_of :password, 
@@ -16,7 +16,20 @@ class User < ActiveRecord::Base
                             :if => :password
 
 
-  validates :first_name,:last_name, :username, :email, :user_role, :presence => true
+  validates :first_name,:last_name, :username, :email, :presence => true
+  
+  validates :user_role, :presence => true, 
+                        :unless => lambda{|u| u.skip_role == true }
+  
+  
+  validates :email, :format => { :with => /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
+                    :unless => lambda{ |u| u.email.blank? }
+  
+  validates :email, :uniqueness => true,
+                    :unless => lambda{ |u| u.email.blank? }
+                    
+  validates :username, :uniqueness => true,
+                        :unless => lambda{ |u| u.username.blank? }                    
 
   # => Associations
   #---------------------------------------

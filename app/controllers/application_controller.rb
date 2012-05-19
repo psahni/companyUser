@@ -19,17 +19,18 @@ class ApplicationController < ActionController::Base
 
   def require_company_admin_login
     require_login
-    if current_user && ( current_user.superuser? || current_user.admin? )
+    return unless current_user
+    if ( current_user.superuser? || current_user.admin? )
       return 
     else
-     render :file => 'public/404.html'
+      render :file => 'public/404.html' and return
     end
   end
 
 #--------------------------------------------------------------------------------------------------
   
   def not_authenticated
-    redirect_to root_path, :alert => "Please login first."
+    return redirect_to root_path, :alert => "Please login first."
   end
 
 #--------------------------------------------------------------------------------------------------
