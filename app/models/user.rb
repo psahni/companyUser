@@ -16,7 +16,9 @@ class User < ActiveRecord::Base
                             :if => :password
 
 
-  validates :first_name,:last_name, :username, :email, :address, :mobile_no, :device_info, :presence => true
+  validates :first_name,:last_name, :username, :email , :presence => true
+  
+  validates :address, :mobile_no, :device_info, :presence => true, :unless => lambda{|u| ( u.admin? || u.superuser? )}
   
   validates :user_role, :presence => true, 
                         :unless => lambda{|u| u.skip_role == true }
