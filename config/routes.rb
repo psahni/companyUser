@@ -7,7 +7,12 @@ AkashPortal::Application.routes.draw do
   resources :user_sessions
   resources :companies
   resources :users  
-  resources :password_resets
+  resources :password_resets do
+    collection do
+      get 'change_password_form'
+      post 'change_password_user'
+    end
+  end
   
   match 'login'  => 'user_sessions#new',     :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
  
   attr_accessor :user_role, :skip_role
-  attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role
+  attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role, :address, :mobile_no, :device_info
   
   # => Validations
   #---------------------------------------  
@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
                             :if => :password
 
 
-  validates :first_name,:last_name, :username, :email, :presence => true
+  validates :first_name,:last_name, :username, :email, :address, :mobile_no, :device_info, :presence => true
   
   validates :user_role, :presence => true, 
                         :unless => lambda{|u| u.skip_role == true }

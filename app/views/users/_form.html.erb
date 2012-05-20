@@ -23,6 +23,22 @@
   </div> 
   
   <div class='field'>
+    <%=form.label :address%>
+    <%=form.text_area :address, :rows => 2, :cols => 30%> 
+  </div> 
+  
+  <div class='field'>
+    <%=form.label :mobile_no%>
+    <%=form.text_field :mobile_no%> 
+  </div> 
+  
+  <div class='field'>
+    <%=form.label :device_information%>
+    <%=form.text_field :device_info%> 
+  </div> 
+  
+    
+  <div class='field'>
      <%=form.label :role%>
      Worker: <%=form.radio_button :user_role,  User::ROLES['worker'], :checked => (@user.role == User::ROLES['worker']), :class => 'user_role_radio'%>
      Manager:<%=form.radio_button :user_role, User::ROLES['manager'], :checked => (@user.role == User::ROLES['manager']), :class => 'user_role_radio'%>

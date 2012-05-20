@@ -9,7 +9,6 @@ class SorceryResetPassword < ActiveRecord::Migration
 
   def self.down
     remove_index :users, :reset_password_token
-    
     remove_column :users, :reset_password_email_sent_at
     remove_column :users, :reset_password_token_expires_at
     remove_column :users, :reset_password_token

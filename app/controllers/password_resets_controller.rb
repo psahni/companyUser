@@ -1,5 +1,6 @@
 class PasswordResetsController < ApplicationController
-   skip_before_filter :require_login
+  
+   skip_before_filter :require_login, :except => [:change_password_form, :change_password ]
 
 
   def new
@@ -23,6 +24,21 @@ class PasswordResetsController < ApplicationController
     not_authenticated unless @user
   end
 
+  def change_password_form
+    @user = current_user
+  end
+  
+  def change_password_user
+    @user = current_user
+    @user.password_confirmation = params[:user][:password_confirmation]
+    @user.skip_role = true
+     if @user.change_password!(params[:user][:password])
+      redirect_to(root_path, :notice => 'Password was successfully updated.')
+    else
+      render :action => "change_password_form"
+    end
+  end
+  
   # This action fires when the user has sent the reset password form.
   def update
     @token = params[:token]
