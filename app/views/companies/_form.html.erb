@@ -48,7 +48,7 @@
     
     <div class='field'>
       <%=form.label      :database_name%>
-      <%=form.text_field :db_name, :rows => 2, :cols => 30%>
+      <%=form.text_field :db_name, :rows => 2, :cols => 30, :disabled => (@company.new_record? ? false : true)%>
     </div>
     
     <%=form.fields_for :admin do |user|%>

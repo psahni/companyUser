@@ -31,6 +31,6 @@
   padding: 10px;
 }
 
-div.field_with_errors input{
+div.field_with_errors input, textarea{
   border: 1px solid red;
 }

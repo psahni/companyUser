@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
                     :unless => lambda{ |u| u.email.blank? }
                     
   validates :username, :uniqueness => true,
-                        :unless => lambda{ |u| u.username.blank? }                    
+                       :unless => lambda{ |u| u.username.blank? }                    
 
   # => Associations
   #---------------------------------------

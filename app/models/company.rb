@@ -26,7 +26,6 @@ class Company < ActiveRecord::Base
   end
   
   before_create :create_database_of_company
-  before_destroy :drop_database_of_company
   
   
   
@@ -39,15 +38,6 @@ class Company < ActiveRecord::Base
     return
   end
     
-    
-  def drop_database_of_company
-    database_name = self.db_name
-    logger.info("\n\n==> DROPPING DATABASE FOR #{ name }============ ")
-    ActiveRecord::Base.connection.drop_database(database_name)
-    rescue => ex
-    logger.error("ERROR: DATABASE COULD NOT BE DROPPED BECAUSE #{ ex.message }\n\n")
-    return
-  end
     
   private
   
