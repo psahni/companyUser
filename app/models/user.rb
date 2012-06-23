@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   authenticates_with_sorcery!
  
   attr_accessor :user_role, :skip_role
-  attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role, :address, :mobile_no, :device_info
+  attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role, :address, :mobile_no, :device_info, :last_login, :srv_nounce, :skip_role
   
   # => Validations
   #---------------------------------------  
@@ -69,5 +69,13 @@ class User < ActiveRecord::Base
      self.role = self.user_role
      save
    end
-   
+
+  def password_encryption
+    encrypt_password
+  end   
+  
+  def already_logged_in?
+    last_login >= ( Time.now - 2.hours )   
+  end
+  
 end

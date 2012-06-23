@@ -14,9 +14,15 @@ AkashPortal::Application.routes.draw do
     end
   end
   
+  resources :apis do
+    collection do
+      post 'login'
+    end
+  end
+  
   match 'login'  => 'user_sessions#new',     :as => :login
   match 'logout' => 'user_sessions#destroy', :as => :logout
-  match 'forgot' => 'password_resets#new', :as => :forgot
+  match 'forgot' => 'password_resets#new',   :as => :forgot
 
 
 
