@@ -17,6 +17,7 @@ AkashPortal::Application.routes.draw do
   resources :apis do
     collection do
       post 'login'
+      post 'get_contacts'
     end
   end
   

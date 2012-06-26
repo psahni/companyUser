@@ -1,0 +1,8 @@
+md5( crypted_password + srv_nounce + client_nounce )
+
+password: $2a$10$UOV/ukclFeRafVdNGJTx6u9Y.jQ5cNuFFbIyOklFIZbY/IQBhhaiS
+srvDqDVgkQqtZpJFMcoRTDp
+abcd123
+
+
+Digest: 605484384eac70fb97a3cd1d591c9ceb
