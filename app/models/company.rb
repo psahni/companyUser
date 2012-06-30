@@ -28,10 +28,7 @@ class Company < ActiveRecord::Base
     self.admin.role =  self.admin.user_role = User::ROLES['admin'] if ( self.admin.role.blank? || self.admin.user_role.blank? )
   end
   
-  ##before_create :create_database_of_company##
 
-  #after_create :insert_admin_into_company_database  
-  
   
   def save_with_backend_infrastructure
     if valid?
@@ -44,9 +41,6 @@ class Company < ActiveRecord::Base
     end  
   end
 
-
-
- #protected
    
   def create_database_of_company
     database_name = self.db_name
@@ -61,9 +55,11 @@ class Company < ActiveRecord::Base
     return false
   rescue  Mysql2::Error => ex
      logger.error("ERROR: Mysql::Error DATABASE COULD NOT BE CREATED BECAUSE #{ ex.message }\n\n")
+     self.errors.add(:base, 'Error occurred while creating database')
      return false
    rescue => ex
      logger.error("ERROR: DATABASE COULD NOT BE CREATED BECAUSE #{ ex.message }\n\n")
+     self.errors.add(:base, 'Error occurred while creating database')
      return false
   end
     
@@ -138,8 +134,6 @@ class Company < ActiveRecord::Base
    created = Employee.create(self.db_name, self.admin)
    return created  
   end
-  
-  
   
   
   private

@@ -5,11 +5,12 @@ class ApisController < ApplicationController
 
   #-------------------------------------------------------------------------------------
   # => Example of curl request
-  #  curl -d "username=psahni&password=pass13" http://localhost:3344/apis/login
+  #  curl -d "json="{\"username\":\"psahni\",\"password\":\"pass123\"}" " http://localhost:3344/apis/login
   #-------------------------------------------------------------------------------------
     
   def login
-    @user = User.authenticate(params[:username], params[:password])
+    user_params = JSON.parse(params[:json])
+    @user = User.authenticate(user_params['username'], user_params['password'])
     if @user && @user.already_logged_in?
      return render :json => { :status => :ok, :message => 'Already authenticated', :success => false, :srv_nounce => @user.srv_nounce, :salt => @user.salt }
     else
@@ -35,9 +36,9 @@ class ApisController < ApplicationController
   def get_contacts
     validate_params
     find_user 
-    server_side_digest = digest_of(User.last.crypted_password,User.last.srv_nounce, params[:client_nounce])
-    if server_side_digest.eql?(params[:digest])
-      render :json => { :status => :ok, :success => true, :message => 'Valid Request...Lets move ahead' }
+    server_side_digest = digest_of(@user.crypted_password, @user.srv_nounce, @user_params['client_nounce'])
+    if server_side_digest.eql?(@user_params['digest'])
+      render :json => { :status => :ok, :success => true, :message  => 'Valid Request...Lets move ahead' }
     else
       render :json => { :status => :error, :success => true, :message => 'Invalid Request' }
     end   
@@ -54,12 +55,13 @@ class ApisController < ApplicationController
   private
   
   def validate_params
-    raise ArgumentError, "Invalid Arguments" if ( params[:digest].blank? || params[:client_nounce].blank? || params[:username].blank? )
+    @user_params = JSON.parse(params[:json])
+    raise ArgumentError, "Invalid Arguments" if ( @user_params['digest'].blank? || @user_params['client_nounce'].blank? || @user_params['username'].blank? )
   end
   
   def find_user
-    @user = User.find_by_username(params[:username])
-    raise InvalidParams, 'Invalid Params' unless @user
+    @user = User.find_by_username(@user_params['username'])
+    raise InvalidParams, 'Invalid Data' unless @user
     @user
   end
   
