@@ -35,9 +35,9 @@ class ApisController < ApplicationController
   def get_contacts
     validate_params
     find_user 
-    server_side_digest = digest_of(User.last.crypted_password + User.last.srv_nounce, params[:client_nounce])
+    server_side_digest = digest_of(User.last.crypted_password,User.last.srv_nounce, params[:client_nounce])
     if server_side_digest.eql?(params[:digest])
-      render :json => { :status => :ok, :success => true, :message => 'Valid Request' }
+      render :json => { :status => :ok, :success => true, :message => 'Valid Request...Lets move ahead' }
     else
       render :json => { :status => :error, :success => true, :message => 'Invalid Request' }
     end   

@@ -16,7 +16,7 @@ class UsersController < ApplicationController
   
   def create
     @user = current_company.users.build(params[:user])
-    if @user.save_with_role
+    if @user.valid? && @user.save_with_role_and_mapping
       redirect_to users_path, :notice => "User has been successfully created"
     else
       render 'new'

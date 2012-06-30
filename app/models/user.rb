@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
+
   authenticates_with_sorcery!
- 
+  restore_establish_connection()
+   
   attr_accessor :user_role, :skip_role
   attr_accessible :company_id, :first_name, :last_name, :email, :username, :user_role, :address, :mobile_no, :device_info, :last_login, :srv_nounce, :skip_role
   
@@ -45,6 +47,8 @@ class User < ActiveRecord::Base
     self.password = self.password_confirmation = 'passw0rd'
   end
 
+
+  
   # => ROLES
   #----------------------------------------
   ROLES = { 'superuser' => -1,  'worker' => 0 , 'manager' => 1, 'admin' => 2 }
@@ -65,9 +69,9 @@ class User < ActiveRecord::Base
     first_name + " " + last_name
   end
    
-   def save_with_role
+   def save_with_role_and_mapping
      self.role = self.user_role
-     save
+     save && map_user_into_company_database 
    end
 
   def password_encryption
@@ -76,6 +80,11 @@ class User < ActiveRecord::Base
   
   def already_logged_in?
     last_login >= ( Time.now - 2.hours )   
+  end
+  
+  def map_user_into_company_database
+    restore_establish_connection()
+    Employee.create(self.company.db_name, self)
   end
   
 end

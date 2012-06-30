@@ -14,11 +14,14 @@ class CompaniesController < ApplicationController
   
   def create
     @company = Company.new(params[:company]) 
-    if @company.save
+    if @company.save_with_backend_infrastructure
       redirect_to companies_path
     else
       render 'new'
     end
+    rescue => ex
+      puts "==> #{ ex.message }"
+      render 'new'
   end
 
   def edit
